@@ -1,4 +1,4 @@
-﻿<h1>Welcome To Barksy</h1>
+<h1>Welcome To Barksy</h1>
 <form class="form-horizontal" name="uploadForm" ng-submit="fileUpload.uploadFile(uploadForm.$valid)" novalidate>
     <!--File selector allows only file types deemed "safe" and warns when any other type is chosen-->
     <div class="form-group" ng-class="{ 'has-error' : uploadForm.uploadFileField.$error.required }">
@@ -15,8 +15,8 @@
         <label for="fileTags" class="control-label col-sm-3 col-md-2">Enter tags for the file: </label>
         <div class="col-sm-6 col-md-5">
             <tags-input ng-model="fileUpload.tags" use-strings="true" placeholder="Enter one or more tags" name="fileTags" allowed-tags-pattern="^[A-Za-z0-9_-]+$" required
-                        on-invalid-tag="fileUpload.tagHasBadChars($tag)" on-tag-added="fileUpload.tagHasBadChars($tag)"></tags-input>
-            <i class="text-danger" ng-show="fileUpload.badTag">Only letters, numbers, hyphens, and underscores are allowed in tags</i>
+                        text="fileUpload.leftoverText"></tags-input>
+            <i class="text-danger" ng-show="fileUpload.checkText()">Only letters, numbers, hyphens, and underscores are allowed in tags</i>
         </div>
         <div class="col-sm-3 col-md-5"></div>
     </div>
