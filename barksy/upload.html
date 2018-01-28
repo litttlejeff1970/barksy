@@ -1,0 +1,27 @@
+﻿<h1>Welcome To Barksy</h1>
+<form class="form-horizontal" name="uploadForm" ng-submit="fileUpload.uploadFile(uploadForm.$valid)" novalidate>
+    <!--File selector allows only file types deemed "safe" and warns when any other type is chosen-->
+    <div class="form-group" ng-class="{ 'has-error' : uploadForm.uploadFileField.$error.required }">
+        <label for="uploadFileField" class="control-label col-sm-3 col-md-2">Select a file to upload: </label>
+        <div class="col-sm-6 col-md-5">
+            <input type="file" ngf-select="fileUpload.getTags()" ng-model="fileUpload.theFile" class="form-control" name="uploadFileField" id="uploadFileField" required 
+                   ngf-model-invalid="fileUpload.errorFile" ngf-pattern=".txt,.doc,.docx,.xls,.xlsx,.pdf,.csv,image/*"/>
+            <i class="text-danger" ng-show="uploadForm.uploadFileField.$error.pattern">Potentially unsafe file. Please select a different file.</i>
+        </div>
+        <div class="col-sm-3 col-md-5"></div>
+    </div>
+    <!--Input control for tags.  Tags are limited to text, numbers, hyphens, and underscores only-->
+    <div class="form-group" ng-class="{ 'has-error' : uploadForm.fileTags.$invalid && uploadForm.fileTags.$touched }">
+        <label for="fileTags" class="control-label col-sm-3 col-md-2">Enter tags for the file: </label>
+        <div class="col-sm-6 col-md-5">
+            <tags-input ng-model="fileUpload.tags" use-strings="true" placeholder="Enter one or more tags" name="fileTags" allowed-tags-pattern="^[A-Za-z0-9_-]+$" required
+                        on-invalid-tag="fileUpload.tagHasBadChars($tag)" on-tag-added="fileUpload.tagHasBadChars($tag)"></tags-input>
+            <i class="text-danger" ng-show="fileUpload.badTag">Only letters, numbers, hyphens, and underscores are allowed in tags</i>
+        </div>
+        <div class="col-sm-3 col-md-5"></div>
+    </div>
+    <div class="col-sm-offset-3 col-sm-6 col-md-offset-2 col-md-5">
+        <button class="btn btn-primary" type="submit" ng-disabled="uploadForm.$invalid">Upload</button>
+    </div>
+    <div class="col-sm-3 col-md-5"></div>
+</form>
