@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     /* Instantiate application */
@@ -33,20 +33,19 @@
     /*      $location: Angular $location service                                    */
     /* Properties:                                                                  */
     /*      tags: Array of tags provided by the user                                */
-    /*      badTag: Boolean - true if the user has entered an invalid tag           */
     /*      serverResponse: Response received from http calls                       */
     /* Methods:                                                                     */
     /*      uploadFile: Upload the user provided file                               */
     /*      getTags: Check to see if the file has already been uploaded and get its */
     /*               tags if it has                                                 */
-    /*      tagHasBadChars: Check to see if a tag contains invalid characters       */
+    /*      checkText: Check to see if a tag contains invalid characters            */
     /*                                                                              */
     /********************************************************************************/
 
     myApp.controller('FileUploadController', function (Upload, filesService, $location) {
         var self = this;
         self.tags = [];
-        self.badTag = false;
+        self.leftoverText = '';
 
         self.uploadFile = function (isValid) {
             var file = self.theFile;
@@ -83,6 +82,8 @@
                         self.tags = [];
                     }
 
+                    /* If existing tags are found, replace any tags entered, including invalid tags */
+
                     self.leftoverText = '';
 
                 }, function (response) {
@@ -92,13 +93,8 @@
             }
         }
 
-        self.tagHasBadChars = function (tag) {
-
-            if (tag.text.match(/^[A-Za-z0-9-_]+$/)) {
-                self.badTag = false;
-            } else {
-                self.badTag = true;
-            }
+        self.checkText = function () {
+            return !self.leftoverText.match(/^[A-Za-z0-9-_]*$/);
         }
     });
 
